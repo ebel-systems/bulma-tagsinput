@@ -243,13 +243,15 @@ export default class BulmaTagsInput extends Component {
             // TODO: add possibility to provide template through options
             const dropdownItemFragment = document.createRange().createContextualFragment(dropdownItemTemplate({
                 text: item.text,
-                value: item.value
+                value: item.value,
+                parents: item.parents
             }));
             const dropdownItem = dropdownItemFragment.firstElementChild;
 
             // Save item data into dataset
             dropdownItem.dataset.value = item.value;
             dropdownItem.dataset.text = item.text;
+            dropdownItem.dataset.parents = item.parents;
 
             dropdownItem.addEventListener('click', this._onDropdownItemClick);
 
@@ -1093,7 +1095,8 @@ export default class BulmaTagsInput extends Component {
                     results.forEach(result => {
                         let item = {
                             value: null,
-                            text: null
+                            text: null,
+                            parents: null,
                         };
 
                         if (!isObject(result)) {
@@ -1102,6 +1105,7 @@ export default class BulmaTagsInput extends Component {
                         } else {
                             item.value = result[this.options.itemValue];
                             item.text = result[this.options.itemText];
+                            item.parents = result[this.options.itemParents];
                         }
 
                         this._createDropdownItem(item);
